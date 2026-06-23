@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="header">
-    <h1>LAPORAN PELANGGARAN SISWA — EduGuard KPI</h1>
+    <h1>LAPORAN PELANGGARAN SISWA — Dashboard Pelanggaran Siswa</h1>
     <p>SMA/SMK Negeri — Sistem Monitoring Perilaku Siswa</p>
 </div>
 <h2>Laporan Data Pelanggaran</h2>
@@ -54,7 +54,7 @@
             <td>{{ $v->student?->nis }}</td>
             <td>{{ $v->student?->schoolClass?->class_name }}</td>
             <td>{{ $v->category_label }}</td>
-            <td>{{ $v->sub_category }}</td>
+            <td>{{ $v->sub_category_label }}</td>
             <td><span class="badge badge-{{ $v->severity }}">{{ strtoupper($v->severity) }}</span></td>
             <td>{{ Str::limit($v->follow_up ?? '-', 50) }}</td>
         </tr>
@@ -63,6 +63,6 @@
         @endforelse
     </tbody>
 </table>
-<div class="footer">EduGuard KPI — {{ now()->format('d/m/Y H:i') }}</div>
+<div class="footer">Dashboard Pelanggaran Siswa — {{ now()->format('d/m/Y H:i') }}</div>
 </body>
 </html>

@@ -8,19 +8,11 @@
     <div class="glass-card p-8">
         <form method="POST" action="{{ route('students.store') }}" class="space-y-5">
             @csrf
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">NIS *</label>
-                    <input type="text" name="nis" value="{{ old('nis') }}" required
-                           class="w-full bg-white border border-slate-300 text-slate-800 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder-slate-400"
-                           placeholder="00000001">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">NISN</label>
-                    <input type="text" name="nisn" value="{{ old('nisn') }}"
-                           class="w-full bg-white border border-slate-300 text-slate-800 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder-slate-400"
-                           placeholder="0000000000">
-                </div>
+            <div>
+                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">NIS *</label>
+                <input type="text" name="nis" value="{{ old('nis') }}" required
+                       class="w-full bg-white border border-slate-300 text-slate-800 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder-slate-400"
+                       placeholder="00000001">
             </div>
 
             <div>

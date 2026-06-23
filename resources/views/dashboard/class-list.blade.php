@@ -9,10 +9,10 @@
     @php
         $students = $class->students ?? collect();
         $kpis = $students->filter(fn($s) => $s->kpi);
-        $avgScore = $kpis->count() ? round($kpis->avg(fn($s) => $s->kpi->overall_score), 1) : 100;
+        $avgScore = $kpis->count() ? round($kpis->avg(fn($s) => $s->kpi->overall_score), 1) : 0;
         $redCount = $students->filter(fn($s) => $s->kpi?->warning_status === 'red')->count();
         $yellowCount = $students->filter(fn($s) => $s->kpi?->warning_status === 'yellow')->count();
-        $color = $avgScore >= 80 ? 'emerald' : ($avgScore >= 60 ? 'amber' : 'red');
+        $color = $avgScore <= 20 ? 'emerald' : ($avgScore <= 40 ? 'amber' : 'red');
     @endphp
     <a href="{{ route('classes.show', $class) }}"
        class="glass-card p-6 hover:border-indigo-500/40 hover:bg-indigo-500/5 transition-all duration-300 group block">
@@ -33,11 +33,11 @@
         <div class="mb-3">
             <div class="flex justify-between text-xs mb-1">
                 <span class="text-slate-500">Rata-rata KPI</span>
-                <span class="font-bold text-{{ $color }}-400">{{ $avgScore }}</span>
+                <span class="font-bold {{ $avgScore <= 10 ? 'text-emerald-400' : ($avgScore <= 20 ? 'text-indigo-400' : ($avgScore <= 40 ? 'text-amber-400' : 'text-rose-400')) }}">{{ $avgScore }}</span>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-2">
-                <div class="h-2 rounded-full bg-{{ $color }}-500 transition-all duration-700"
-                     style="width: {{ $avgScore }}%"></div>
+                <div class="h-2 rounded-full transition-all duration-700"
+                     style="width: {{ $avgScore }}%; background: {{ $avgScore <= 10 ? 'linear-gradient(90deg, #10b981, #059669)' : ($avgScore <= 20 ? 'linear-gradient(90deg, #6366f1, #8b5cf6)' : ($avgScore <= 40 ? 'linear-gradient(90deg, #f59e0b, #d97706)' : 'linear-gradient(90deg, #f43f5e, #dc2626)')) }}"></div>
             </div>
         </div>
 

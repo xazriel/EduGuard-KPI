@@ -16,7 +16,7 @@ class PdfGeneratorService
         $violations = $violation->student->violations()
             ->get()
             ->map(function($v) {
-                return $v->category_label . ' — ' . $v->sub_category . ($v->description ? ' (' . $v->description . ')' : '');
+                return $v->category_label . ' — ' . $v->sub_category_label . ($v->description ? ' (' . $v->description . ')' : '');
             })->toArray();
 
         $pdf = Pdf::loadView('pdf.statement-letter', [

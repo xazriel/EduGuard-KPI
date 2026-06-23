@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Student extends Model
 {
     protected $fillable = [
-        'nis', 'nisn', 'full_name', 'gender', 'birth_place',
+        'nis', 'full_name', 'gender', 'birth_place',
         'birth_date', 'parent_name', 'address', 'class_id', 'status',
     ];
 
@@ -48,7 +48,6 @@ class Student extends Model
     {
         return $query->where(function ($q) use ($term) {
             $q->where('nis', 'like', "%{$term}%")
-              ->orWhere('nisn', 'like', "%{$term}%")
               ->orWhere('full_name', 'like', "%{$term}%");
         });
     }

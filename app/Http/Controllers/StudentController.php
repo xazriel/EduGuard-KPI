@@ -33,6 +33,7 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
+        $this->kpiEngine->recalculate($student);
         $student->load(['schoolClass', 'kpi', 'violations.statementLetter', 'violations.createdBy']);
 
         $monthlyTrend = $this->kpiEngine->getMonthlyTrend($student, 6);
@@ -61,7 +62,6 @@ class StudentController extends Controller
     {
         $validated = $request->validate([
             'nis'         => 'required|string|max:20|unique:students',
-            'nisn'        => 'nullable|string|max:20|unique:students',
             'full_name'   => 'required|string|max:255',
             'gender'      => 'required|in:L,P',
             'birth_place' => 'nullable|string|max:100',
@@ -91,7 +91,6 @@ class StudentController extends Controller
     {
         $validated = $request->validate([
             'nis'         => 'required|string|max:20|unique:students,nis,' . $student->id,
-            'nisn'        => 'nullable|string|max:20|unique:students,nisn,' . $student->id,
             'full_name'   => 'required|string|max:255',
             'gender'      => 'required|in:L,P',
             'birth_place' => 'nullable|string|max:100',
@@ -111,7 +110,7 @@ class StudentController extends Controller
     public function search(Request $request)
     {
         $term = $request->get('q', '');
-        $students = Student::with('schoolClass')
+        $students = Student::with(['schoolClass', 'violations'])
             ->search($term)
             ->active()
             ->limit(10)
@@ -119,9 +118,9 @@ class StudentController extends Controller
             ->map(fn($s) => [
                 'id'         => $s->id,
                 'nis'        => $s->nis,
-                'nisn'       => $s->nisn,
                 'full_name'  => $s->full_name,
                 'class_name' => $s->schoolClass?->class_name,
+                'follow_ups' => $s->violations->pluck('follow_up')->unique()->values(),
             ]);
 
         return response()->json($students);
@@ -134,27 +133,25 @@ class StudentController extends Controller
 
         if (!$kpi) return ['Lakukan evaluasi KPI siswa terlebih dahulu.'];
 
-        if ($kpi->attendance_score < 80) {
+        if ($kpi->attendance_score > 20) {
             $recs[] = 'Tingkatkan kehadiran siswa melalui komunikasi dengan orang tua.';
         }
-        if ($kpi->discipline_score < 80) {
+        if ($kpi->discipline_score > 20) {
             $recs[] = 'Berikan pembinaan disiplin dan konseling individu.';
         }
-        if ($kpi->social_ethics_score < 80) {
+        if ($kpi->social_ethics_score > 20) {
             $recs[] = 'Ikutkan siswa dalam program pelatihan sosial dan empati.';
         }
-        if ($kpi->aggression_score < 70) {
+        if ($kpi->aggression_score > 30) {
             $recs[] = 'Perlu penanganan khusus: konseling agresivitas dan mediasi.';
         }
-        if ($kpi->integrity_score < 80) {
+        if ($kpi->integrity_score > 20) {
             $recs[] = 'Lakukan pembinaan karakter dan nilai integritas.';
         }
-        if ($kpi->high_risk_score < 60) {
+        if ($kpi->high_risk_score > 40) {
             $recs[] = 'Segera hubungi orang tua dan lakukan konferensi kasus.';
         }
-        if (empty($recs)) {
-            $recs[] = 'Siswa menunjukkan perilaku yang baik. Pertahankan prestasi!';
-        }
+        // No recommendations if student has good behavior
 
         return $recs;
     }

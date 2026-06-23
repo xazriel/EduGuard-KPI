@@ -11,7 +11,6 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('nis', 20)->unique();
-            $table->string('nisn', 20)->unique()->nullable();
             $table->string('full_name');
             $table->enum('gender', ['L', 'P']);
             $table->string('birth_place')->nullable();
@@ -22,7 +21,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive', 'graduated'])->default('active');
             $table->timestamps();
 
-            $table->index(['nis', 'nisn']);
+            $table->index('nis');
             $table->index('class_id');
         });
     }

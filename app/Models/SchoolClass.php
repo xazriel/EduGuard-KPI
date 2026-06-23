@@ -22,7 +22,7 @@ class SchoolClass extends Model
             ->with('kpi')
             ->get()
             ->filter(fn($s) => $s->kpi)
-            ->avg(fn($s) => $s->kpi->overall_score) ?? 100;
+            ->avg(fn($s) => $s->kpi->overall_score) ?? 0.0;
     }
 
     public function getHighRiskCountAttribute(): int

@@ -1,10 +1,14 @@
+@inject('warningService', 'App\Services\EarlyWarningService')
+@php
+    $alerts = $warningService->getSchoolAlerts();
+@endphp
 <!DOCTYPE html>
 <html lang="id" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Dashboard') — EduGuard KPI</title>
+    <title>@yield('title', 'Dashboard') — Dashboard Pelanggaran Siswa</title>
     <meta name="description" content="@yield('meta_description', 'Sistem Business Intelligence monitoring perilaku siswa sekolah')">
 
     <!-- Fonts -->
@@ -48,8 +52,8 @@
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                 </div>
                 <div>
-                    <p class="font-bold text-slate-800 text-sm">EduGuard</p>
-                    <p class="text-xs text-indigo-400 font-semibold">KPI Dashboard</p>
+                    <p class="font-bold text-slate-800 text-sm">Pelanggaran Siswa</p>
+                    <p class="text-xs text-indigo-400 font-semibold">Dashboard Monitoring</p>
                 </div>
             </div>
         </div>
@@ -114,12 +118,59 @@
                 <button onclick="toggleSidebar()" class="lg:hidden text-gray-500 hover:text-slate-800 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
+                @hasSection('back-url')
+                <a href="@yield('back-url')" class="text-slate-400 hover:text-slate-700 transition-all hover:scale-110 flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-100" title="Kembali">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                </a>
+                @endif
                 <div>
                     <h1 class="text-lg font-semibold text-slate-800">@yield('page-title', 'Dashboard')</h1>
-                    <p class="text-xs text-slate-400">@yield('page-subtitle', 'EduGuard KPI — Sistem Monitoring Perilaku Siswa')</p>
+                    <p class="text-xs text-slate-400">@yield('page-subtitle', 'Sistem Monitoring Pelanggaran Siswa')</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
+                {{-- Notification Dropdown --}}
+                <div class="relative">
+                    <button onclick="toggleNotifications()" class="relative p-2 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                        @if(count($alerts) > 0)
+                        <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
+                        @endif
+                    </button>
+                    
+                    <div id="notificationsDropdown" class="absolute right-0 mt-2 w-80 bg-white border border-slate-200 rounded-xl shadow-xl z-50 hidden overflow-hidden">
+                        <div class="border-b border-slate-100 bg-slate-50/80 flex items-center justify-between" style="padding: 10px 14px;">
+                            <span class="text-slate-500 uppercase tracking-wider" style="font-size: 10px; font-weight: 700;">Peringatan Dini</span>
+                            @if(count($alerts) > 0)
+                            <span class="font-bold bg-red-500/10 text-red-500 rounded-full" style="font-size: 10px; padding: 2px 6px;">{{ count($alerts) }} Peringatan</span>
+                            @endif
+                        </div>
+                        <div class="overflow-y-auto divide-y divide-slate-100" style="max-height: 280px;">
+                            @forelse($alerts as $alert)
+                            <a href="{{ isset($alert['student']) ? route('students.show', $alert['student']) : '#' }}" 
+                               class="block hover:bg-slate-50 transition-colors border-l-4 {{ $alert['type'] === 'danger' ? 'border-red-500' : 'border-amber-500' }}"
+                               style="padding: 10px 14px;">
+                                <div class="flex flex-col" style="gap: 4px;">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-700 truncate max-w-[170px]" style="font-size: 13px; font-weight: 700; line-height: 1.2;">{{ $alert['student']?->full_name ?? 'Siswa' }}</span>
+                                        <span class="bg-slate-100 text-slate-500 rounded" style="font-size: 10.5px; font-weight: 600; padding: 1px 5px; line-height: 1;">{{ $alert['student']?->schoolClass?->class_name ?? '-' }}</span>
+                                    </div>
+                                    <span class="text-slate-500" style="font-size: 11px; font-weight: 500; line-height: 1.2;">{{ $alert['message'] }}</span>
+                                </div>
+                            </a>
+                            @empty
+                            <div class="text-center text-slate-400" style="padding: 16px; font-size: 11px;">
+                                Tidak ada peringatan dini.
+                            </div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+
                 <a href="{{ route('public.lookup') }}" target="_blank" class="text-xs text-indigo-400 hover:text-indigo-300 transition-colors border border-indigo-500/30 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10">
                     🔍 Portal Siswa
                 </a>
@@ -149,6 +200,18 @@
         document.getElementById('sidebar').classList.toggle('open');
         document.getElementById('sidebarOverlay').classList.toggle('hidden');
     }
+    function toggleNotifications() {
+        const dd = document.getElementById('notificationsDropdown');
+        dd.classList.toggle('hidden');
+    }
+    document.addEventListener('click', function(e) {
+        const bell = e.target.closest('button[onclick="toggleNotifications()"]');
+        const dd = e.target.closest('#notificationsDropdown');
+        if (!bell && !dd) {
+            const dropdown = document.getElementById('notificationsDropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+        }
+    });
 </script>
 @stack('scripts')
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $student->full_name }} — EduGuard KPI</title>
+    <title>{{ $student->full_name }} — Dashboard Pelanggaran Siswa</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -18,17 +18,17 @@
             <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             </div>
-            <span class="font-bold text-slate-800 text-sm">EduGuard KPI</span>
+            <span class="font-bold text-slate-800 text-sm">Dashboard Pelanggaran Siswa</span>
         </div>
         <a href="{{ route('public.lookup') }}" class="text-xs text-indigo-400 hover:text-indigo-300 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition-colors">← Cari Lagi</a>
     </div>
 </header>
 
 @php
-    $score  = $student->kpi?->overall_score ?? 100;
+    $score  = $student->kpi?->overall_score ?? 0;
     $status = $student->kpi?->warning_status ?? 'green';
     $colorClass = $status === 'red' ? 'red' : ($status === 'yellow' ? 'amber' : 'emerald');
-    $statusLabel = $status === 'red' ? 'Risiko Tinggi' : ($status === 'yellow' ? 'Perlu Perhatian' : 'Perilaku Baik');
+    $statusLabel = $status === 'red' ? 'Risiko Tinggi' : ($status === 'yellow' ? 'Perlu Pembinaan' : 'Perilaku Baik');
 @endphp
 
 <main class="max-w-5xl mx-auto px-6 py-8 fade-in">
@@ -46,7 +46,7 @@
             </div>
             <div class="flex-1">
                 <h1 class="text-2xl font-black text-slate-800">{{ $student->full_name }}</h1>
-                <p class="text-slate-500 mt-1">{{ $student->schoolClass?->class_name }} · NIS: {{ $student->nis }}{{ $student->nisn ? ' · NISN: '.$student->nisn : '' }}</p>
+                <p class="text-slate-500 mt-1">{{ $student->schoolClass?->class_name }} · NIS: {{ $student->nis }}</p>
                 <div class="flex flex-wrap gap-2 mt-3">
                     <span class="text-xs px-3 py-1 rounded-full font-semibold border
                         {{ $status === 'green' ? 'bg-emerald-500/20 text-emerald-600 border-emerald-500/30' : ($status === 'yellow' ? 'bg-amber-500/20 text-amber-600 border-amber-500/30' : 'bg-red-500/20 text-red-600 border-red-500/30') }}">
@@ -84,13 +84,13 @@
                 <h3 class="text-sm font-bold text-slate-800 mb-4">📊 Skor KPI per Dimensi</h3>
                 @php
                     $dims = [
-                        ['Kehadiran','🕐',$student->kpi?->attendance_score ?? 100],
-                        ['Kedisiplinan','📋',$student->kpi?->discipline_score ?? 100],
-                        ['Etika Sosial','🤝',$student->kpi?->social_ethics_score ?? 100],
-                        ['Agresivitas','💢',$student->kpi?->aggression_score ?? 100],
-                        ['Integritas','⚖️',$student->kpi?->integrity_score ?? 100],
-                        ['Risiko Tinggi','🚨',$student->kpi?->high_risk_score ?? 100],
-                        ['Tren Perilaku','📈',$student->kpi?->behavior_trend_score ?? 100],
+                        ['Kehadiran','🕐',$student->violations->where('category', 'kehadiran')->isEmpty() ? 0 : ($student->kpi?->attendance_score ?? 0)],
+                        ['Kedisiplinan','📋',$student->violations->where('category', 'kedisiplinan')->isEmpty() ? 0 : ($student->kpi?->discipline_score ?? 0)],
+                        ['Etika Sosial','🤝',$student->violations->where('category', 'etika_sosial')->isEmpty() ? 0 : ($student->kpi?->social_ethics_score ?? 0)],
+                        ['Agresivitas','💢',$student->violations->where('category', 'agresivitas')->isEmpty() ? 0 : ($student->kpi?->aggression_score ?? 0)],
+                        ['Integritas','⚖️',$student->violations->where('category', 'integritas')->isEmpty() ? 0 : ($student->kpi?->integrity_score ?? 0)],
+                        ['Risiko Tinggi','🚨',$student->violations->where('category', 'risiko_tinggi')->isEmpty() ? 0 : ($student->kpi?->high_risk_score ?? 0)],
+                        ['Tren Perilaku','📈',$student->kpi?->behavior_trend_score ?? 0],
                     ];
                 @endphp
                 <div class="space-y-3">
@@ -98,10 +98,10 @@
                     <div>
                         <div class="flex justify-between text-xs mb-1">
                             <span class="text-slate-500">{{ $icon }} {{ $name }}</span>
-                            <span class="font-bold {{ $val >= 80 ? 'text-emerald-500' : ($val >= 60 ? 'text-amber-500' : 'text-red-500') }}">{{ number_format($val,1) }}</span>
+                            <span class="font-bold {{ $val <= 20 ? 'text-emerald-500' : ($val <= 40 ? 'text-amber-500' : 'text-red-500') }}">{{ round($val) }}/100</span>
                         </div>
                         <div class="w-full bg-slate-100 rounded-full h-1.5">
-                            <div class="h-1.5 rounded-full {{ $val >= 80 ? 'bg-emerald-500' : ($val >= 60 ? 'bg-amber-500' : 'bg-red-500') }}" style="width:{{ $val }}%"></div>
+                            <div class="h-1.5 rounded-full {{ $val <= 20 ? 'bg-emerald-500' : ($val <= 40 ? 'bg-amber-500' : 'bg-red-500') }}" style="width:{{ $val }}%"></div>
                         </div>
                     </div>
                     @endforeach
@@ -109,6 +109,7 @@
             </div>
  
             {{-- Recommendations --}}
+            @if(count($recommendations) > 0)
             <div class="bg-white border border-slate-200 rounded-2xl p-6">
                 <h3 class="text-sm font-bold text-slate-800 mb-3">💡 Rekomendasi</h3>
                 <ul class="space-y-2">
@@ -119,6 +120,7 @@
                     @endforeach
                 </ul>
             </div>
+            @endif
         </div>
  
         {{-- RIGHT --}}
@@ -145,7 +147,7 @@
                                     <span class="text-xs font-semibold text-slate-700">{{ $v->category_label }}</span>
                                     <span class="text-xs px-2 py-0.5 rounded-full {{ $v->severity === 'berat' ? 'bg-red-500/20 text-red-500' : ($v->severity === 'sedang' ? 'bg-amber-500/20 text-amber-500' : 'bg-slate-200 text-slate-500') }}">{{ $v->severity_label }}</span>
                                 </div>
-                                <p class="text-xs text-slate-500 mt-0.5">{{ $v->sub_category }}@if($v->description) — {{ Str::limit($v->description, 80) }}@endif</p>
+                                <p class="text-xs text-slate-500 mt-0.5">{{ $v->sub_category_label }}@if($v->description) — {{ Str::limit($v->description, 80) }}@endif</p>
                                 @if($v->statementLetter?->generated_pdf)
                                 <a href="{{ asset('storage/' . $v->statementLetter->generated_pdf) }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-indigo-500 hover:text-indigo-600 mt-1">📄 Unduh Surat</a>
                                 @endif
@@ -166,7 +168,7 @@
 </main>
  
 <footer class="border-t border-slate-200 py-4 text-center text-xs text-slate-400 mt-8">
-    EduGuard KPI — Data diperbarui otomatis setiap ada perubahan
+    Dashboard Pelanggaran Siswa — Data diperbarui otomatis setiap ada perubahan
 </footer>
  
 <script>

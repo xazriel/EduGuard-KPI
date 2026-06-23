@@ -39,7 +39,7 @@ class ViolationsExport implements FromCollection, WithHeadings, WithMapping, Wit
             $violation->student?->full_name,
             $violation->student?->schoolClass?->class_name,
             $violation->category_label,
-            $violation->sub_category,
+            $violation->sub_category_label,
             $violation->description,
             strtoupper($violation->severity),
             $violation->follow_up,

@@ -3,13 +3,15 @@
 @section('page-title', 'Detail Pelanggaran')
 @section('page-subtitle', 'Informasi lengkap dan surat pernyataan')
 
+@section('back-url', route('violations.index'))
+
 @section('content')
 <div class="max-w-3xl mx-auto space-y-6">
     {{-- Main Card --}}
     <div class="glass-card p-6">
         <div class="flex items-start justify-between mb-6">
             <div>
-                <h2 class="text-lg font-bold text-slate-800">{{ $violation->category_label }} — {{ $violation->sub_category }}</h2>
+                <h2 class="text-lg font-bold text-slate-800">{{ $violation->category_label }} — {{ $violation->sub_category_label }}</h2>
                 <p class="text-sm text-slate-400 mt-1">{{ $violation->violation_date->format('d/m/Y') }} · Dicatat oleh {{ $violation->createdBy?->name }}</p>
             </div>
             <span class="text-xs font-semibold px-3 py-1.5 rounded-full
@@ -45,6 +47,7 @@
         </div>
     </div>
 
+    @if(str_starts_with($violation->follow_up ?? '', 'Pembinaan'))
     {{-- Statement Letter --}}
     <div class="glass-card p-6">
         <h3 class="text-sm font-semibold text-slate-800 mb-4">📄 Surat Pernyataan</h3>
@@ -85,6 +88,7 @@
             <p class="text-xs text-slate-300 mt-2">Format: JPG, PNG, PDF. Maks 5MB.</p>
         </div>
     </div>
+    @endif
 
     <div class="flex gap-3">
         <a href="{{ route('violations.index') }}" class="text-sm text-slate-500 hover:text-slate-600 flex items-center gap-1">← Kembali ke Daftar</a>

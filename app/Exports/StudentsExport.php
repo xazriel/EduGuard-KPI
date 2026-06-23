@@ -18,7 +18,7 @@ class StudentsExport implements FromCollection, WithHeadings, WithMapping, WithS
 
     public function headings(): array
     {
-        return ['No','NIS','NISN','Nama Lengkap','L/P','Kelas','Skor Keseluruhan','Status','Kehadiran','Disiplin','Etika Sosial','Agresivitas','Integritas','Risiko Tinggi'];
+        return ['No','NIS','Nama Lengkap','L/P','Kelas','Skor Keseluruhan','Status','Kehadiran','Disiplin','Etika Sosial','Agresivitas','Integritas','Risiko Tinggi'];
     }
 
     public function map($student): array
@@ -29,18 +29,17 @@ class StudentsExport implements FromCollection, WithHeadings, WithMapping, WithS
         return [
             $i,
             $student->nis,
-            $student->nisn,
             $student->full_name,
             $student->gender === 'L' ? 'Laki-laki' : 'Perempuan',
             $student->schoolClass?->class_name,
-            $kpi?->overall_score ?? 100,
+            $kpi?->overall_score ?? 0,
             $kpi ? strtoupper($kpi->warning_status) : 'GREEN',
-            $kpi?->attendance_score ?? 100,
-            $kpi?->discipline_score ?? 100,
-            $kpi?->social_ethics_score ?? 100,
-            $kpi?->aggression_score ?? 100,
-            $kpi?->integrity_score ?? 100,
-            $kpi?->high_risk_score ?? 100,
+            $kpi?->attendance_score ?? 0,
+            $kpi?->discipline_score ?? 0,
+            $kpi?->social_ethics_score ?? 0,
+            $kpi?->aggression_score ?? 0,
+            $kpi?->integrity_score ?? 0,
+            $kpi?->high_risk_score ?? 0,
         ];
     }
 

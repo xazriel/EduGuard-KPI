@@ -3,7 +3,7 @@
 
 EduGuard-KPI adalah aplikasi berbasis web yang dirancang khusus untuk memfasilitasi Guru Bimbingan dan Konseling (BK) dalam memantau, mencatat, dan menganalisis dinamika perilaku siswa secara terukur. Menggunakan mesin penilaian indeks prestasi perilaku (KPI), sistem ini secara otomatis mendeteksi penurunan nilai, memicu peringatan dini (early warning), serta menghasilkan surat pernyataan pelanggaran secara instan.
 
-Aplikasi ini juga menyediakan portal publik yang memungkinkan wali murid atau pihak sekolah memantau status perkembangan perilaku siswa secara real-time hanya dengan menggunakan NIS atau NISN.
+Aplikasi ini juga menyediakan portal publik yang memungkinkan wali murid atau pihak sekolah memantau status perkembangan perilaku siswa secara real-time hanya dengan menggunakan NIS.
 
 ---
 
@@ -42,7 +42,7 @@ Mendeteksi secara otomatis 4 kondisi kritis siswa:
 * Unduh laporan data pelanggaran serta data kpi siswa ke dalam format **PDF** atau **Excel** secara dinamis berdasarkan filter tanggal, kategori, dan kelas.
 
 ### 7. 🔍 Portal Cek Siswa (Public Lookup)
-* Halaman pencarian publik bebas login bagi orang tua/wali siswa. Cukup masukkan NIS atau NISN siswa untuk melihat status peringatan perilaku, tren pelanggaran, dan rekomendasi pembinaan mandiri secara transparan.
+* Halaman pencarian publik bebas login bagi orang tua/wali siswa. Cukup masukkan NIS siswa untuk melihat status peringatan perilaku, tren pelanggaran, dan rekomendasi pembinaan mandiri secara transparan.
 
 ---
 

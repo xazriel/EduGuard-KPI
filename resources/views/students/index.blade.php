@@ -8,7 +8,7 @@
 <div class="glass-card p-4 mb-6 flex flex-col sm:flex-row gap-3">
     <form method="GET" action="{{ route('students.index') }}" class="flex flex-wrap gap-3 flex-1">
         <input type="text" name="search" value="{{ request('search') }}"
-               placeholder="Cari nama / NIS / NISN..."
+               placeholder="Cari nama / NIS..."
                class="flex-1 min-w-48 bg-white border border-slate-300 text-slate-800 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder-slate-400">
 
         <select name="class_id" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
@@ -20,9 +20,9 @@
 
         <select name="warning_status" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
             <option value="">Semua Status</option>
-            <option value="green"  {{ request('warning_status') === 'green'  ? 'selected' : '' }}>🟢 Hijau</option>
-            <option value="yellow" {{ request('warning_status') === 'yellow' ? 'selected' : '' }}>🟡 Kuning</option>
-            <option value="red"    {{ request('warning_status') === 'red'    ? 'selected' : '' }}>🔴 Merah</option>
+            <option value="green"  {{ request('warning_status') === 'green'  ? 'selected' : '' }}>🟢 Baik</option>
+            <option value="yellow" {{ request('warning_status') === 'yellow' ? 'selected' : '' }}>🟡 Perlu Pembinaan</option>
+            <option value="red"    {{ request('warning_status') === 'red'    ? 'selected' : '' }}>🔴 Risiko Tinggi</option>
         </select>
 
         <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-5 py-2.5 rounded-xl transition-colors font-medium">Filter</button>
@@ -51,7 +51,7 @@
             <thead>
                 <tr class="border-b border-slate-200 bg-slate-100/50">
                     <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Siswa</th>
-                    <th class="px-4 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">NIS/NISN</th>
+                    <th class="px-4 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">NIS</th>
                     <th class="px-4 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Kelas</th>
                     <th class="px-4 py-4 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">KPI Score</th>
                     <th class="px-4 py-4 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
@@ -62,7 +62,7 @@
             <tbody class="divide-y divide-gray-800/50">
                 @forelse($students as $student)
                 @php
-                    $score  = $student->kpi?->overall_score ?? 100;
+                    $score  = $student->kpi?->overall_score ?? 0;
                     $status = $student->kpi?->warning_status ?? 'green';
                     $colorClass = $status === 'red' ? 'red' : ($status === 'yellow' ? 'amber' : 'emerald');
                 @endphp
@@ -81,7 +81,6 @@
                     </td>
                     <td class="px-4 py-4">
                         <p class="font-mono text-xs text-slate-600">{{ $student->nis }}</p>
-                        <p class="font-mono text-xs text-slate-300">{{ $student->nisn ?? '-' }}</p>
                     </td>
                     <td class="px-4 py-4 text-slate-500 text-xs">{{ $student->schoolClass?->class_name }}</td>
                     <td class="px-4 py-4 text-center">

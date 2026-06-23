@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cek Data Siswa — EduGuard KPI</title>
-    <meta name="description" content="Portal publik pencarian data siswa berdasarkan NIS atau NISN">
+    <title>Cek Data Siswa — Dashboard Pelanggaran Siswa</title>
+    <meta name="description" content="Portal publik pencarian data siswa berdasarkan NIS">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -26,7 +26,7 @@
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                 </div>
                 <div>
-                    <p class="font-bold text-slate-800 text-sm">EduGuard KPI</p>
+                    <p class="font-bold text-slate-800 text-sm">Dashboard Pelanggaran Siswa</p>
                     <p class="text-xs text-indigo-400">Portal Siswa & Orang Tua</p>
                 </div>
             </div>
@@ -53,7 +53,7 @@
 
             <h1 class="text-3xl font-black text-slate-800 text-center mb-2 tracking-tight">Cek Data Siswa</h1>
             <p class="text-slate-500 text-center text-sm mb-8 leading-relaxed">
-                Masukkan <span class="text-indigo-400 font-semibold">NIS</span> atau <span class="text-indigo-400 font-semibold">NISN</span> untuk melihat profil, riwayat pelanggaran, dan skor KPI siswa.
+                Masukkan <span class="text-indigo-400 font-semibold">NIS</span> untuk melihat profil, riwayat pelanggaran, dan skor KPI siswa.
             </p>
 
             {{-- Search Form --}}
@@ -65,7 +65,7 @@
                     </div>
                     <input type="text" name="query" id="queryInput"
                            value="{{ old('query') }}"
-                           placeholder="Contoh: 00000001 atau 0000000001"
+                           placeholder="Contoh: 00000001"
                            autocomplete="off"
                            class="w-full bg-white border {{ $errors->has('query') ? 'border-red-500' : 'border-slate-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500' }} text-slate-700 text-base rounded-2xl pl-12 pr-4 py-4 focus:outline-none placeholder-slate-400 transition-colors">
                 </div>
@@ -101,7 +101,7 @@
     </section>
 
     <footer class="border-t border-slate-200 py-4 text-center text-xs text-slate-400">
-        EduGuard KPI — Sistem Monitoring Perilaku Siswa © {{ date('Y') }}
+        Dashboard Pelanggaran Siswa — Sistem Monitoring Pelanggaran Siswa © {{ date('Y') }}
     </footer>
 
     <script>

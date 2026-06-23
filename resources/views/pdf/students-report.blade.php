@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="header">
-    <h1>LAPORAN KPI SISWA — EduGuard KPI</h1>
+    <h1>LAPORAN KPI SISWA — Dashboard Pelanggaran Siswa</h1>
     <p>SMA/SMK Negeri — Sistem Monitoring Perilaku Siswa</p>
 </div>
 <h2>Laporan Data & Nilai KPI Siswa</h2>
@@ -51,7 +51,7 @@
             <td style="font-weight: bold;">{{ $s->full_name }}</td>
             <td>{{ $s->gender }}</td>
             <td>{{ $s->schoolClass?->class_name ?? '-' }}</td>
-            <td style="text-align: center; font-weight: bold;">{{ $s->kpi?->overall_score ?? 100 }}</td>
+            <td style="text-align: center; font-weight: bold;">{{ $s->kpi?->overall_score ?? 0 }}</td>
             <td>
                 <span class="badge badge-{{ $s->kpi?->warning_status ?? 'green' }}">
                     {{ $s->kpi?->status_label ?? 'Baik' }}
@@ -63,6 +63,6 @@
         @endforelse
     </tbody>
 </table>
-<div class="footer">EduGuard KPI — {{ now()->format('d/m/Y H:i') }}</div>
+<div class="footer">Dashboard Pelanggaran Siswa — {{ now()->format('d/m/Y H:i') }}</div>
 </body>
 </html>

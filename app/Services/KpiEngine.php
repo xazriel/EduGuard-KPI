@@ -44,14 +44,14 @@ class KpiEngine
     {
         $violations = $student->violations()->get();
 
-        // Start all dimensions at 100
+        // Start all dimensions at 0
         $scores = [
-            'attendance_score'     => 100.0,
-            'discipline_score'     => 100.0,
-            'social_ethics_score'  => 100.0,
-            'aggression_score'     => 100.0,
-            'integrity_score'      => 100.0,
-            'high_risk_score'      => 100.0,
+            'attendance_score'     => 0.0,
+            'discipline_score'     => 0.0,
+            'social_ethics_score'  => 0.0,
+            'aggression_score'     => 0.0,
+            'integrity_score'      => 0.0,
+            'high_risk_score'      => 0.0,
         ];
 
         foreach ($violations as $violation) {
@@ -59,12 +59,12 @@ class KpiEngine
             if (isset($this->deductions[$key])) {
                 $dim = $this->deductions[$key]['dimension'];
                 $pts = $this->deductions[$key]['points'];
-                $scores[$dim] = max(0, $scores[$dim] - $pts);
+                $scores[$dim] = min(100.0, $scores[$dim] + $pts);
             } else {
                 // Fallback: use category to determine dimension
                 $dim = $this->getCategoryDimension($violation->category);
                 $pts = $this->getSeverityPoints($violation->severity);
-                $scores[$dim] = max(0, $scores[$dim] - $pts);
+                $scores[$dim] = min(100.0, $scores[$dim] + $pts);
             }
         }
 
@@ -76,7 +76,16 @@ class KpiEngine
         $overall = array_sum($scores) / count($scores);
         $overall = round($overall, 2);
 
-        $warningStatus = $this->determineWarningStatus($overall);
+        $maxCoreScore = max([
+            $scores['attendance_score'],
+            $scores['discipline_score'],
+            $scores['social_ethics_score'],
+            $scores['aggression_score'],
+            $scores['integrity_score'],
+            $scores['high_risk_score'],
+        ]);
+
+        $warningStatus = $this->determineWarningStatus($maxCoreScore);
 
         $kpi = StudentKpi::updateOrCreate(
             ['student_id' => $student->id],
@@ -124,20 +133,19 @@ class KpiEngine
             ->whereBetween('violation_date', [$now->copy()->subDays(60), $now->copy()->subDays(31)])
             ->count();
 
-        // Fewer violations = better trend
-        if ($previous === 0 && $current === 0) return 100.0;
-        if ($previous === 0) return max(0, 100 - ($current * 10));
+        if ($previous === 0 && $current === 0) return 0.0;
+        if ($previous === 0) return min(100.0, $current * 10);
 
         $diff = $current - $previous;
-        // Each additional violation this month vs last = -10 trend score
-        return max(0, min(100, 100 - ($diff * 10)));
+        $base = $current * 10;
+        return max(0.0, min(100.0, $base + ($diff * 10)));
     }
 
     public function determineWarningStatus(float $score): string
     {
-        if ($score >= 80) return 'green';
-        if ($score >= 60) return 'yellow';
-        return 'red';
+        if ($score >= 40) return 'red';
+        if ($score >= 20) return 'yellow';
+        return 'green';
     }
 
     /**
@@ -168,7 +176,7 @@ class KpiEngine
         $kpis = StudentKpi::all();
         if ($kpis->isEmpty()) {
             return [
-                'avg_overall'   => 100,
+                'avg_overall'   => 0,
                 'green_count'   => 0,
                 'yellow_count'  => 0,
                 'red_count'     => 0,

@@ -59,14 +59,17 @@ class ViolationController extends Controller
                 'violation'  => $result['violation'],
                 'kpi'        => $result['kpi'],
                 'alerts'     => $result['alerts'],
-                'letter_url' => $result['letter']->generated_pdf
+                'letter_url' => (isset($result['letter']) && $result['letter'])
                     ? asset('storage/' . $result['letter']->generated_pdf)
                     : null,
             ]);
         }
 
         $alertCount = count($result['alerts']);
-        $msg = 'Pelanggaran berhasil dicatat dan surat pernyataan telah dibuat.';
+        $msg = 'Pelanggaran berhasil dicatat.';
+        if (isset($result['letter']) && $result['letter']) {
+            $msg .= ' Surat pernyataan telah dibuat.';
+        }
         if ($alertCount > 0) {
             $msg .= " ⚠ {$alertCount} peringatan dini aktif.";
         }

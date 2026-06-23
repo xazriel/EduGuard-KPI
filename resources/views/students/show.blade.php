@@ -3,6 +3,14 @@
 @section('page-title', 'Profil Siswa')
 @section('page-subtitle', $student->full_name . ' — ' . $student->schoolClass?->class_name)
 
+@php
+    $backUrl = route('students.index');
+    if ($student->class_id) {
+        $backUrl = route('classes.show', $student->class_id);
+    }
+@endphp
+@section('back-url', $backUrl)
+
 @section('content')
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -11,7 +19,7 @@
         {{-- Profile Card --}}
         <div class="glass-card p-6">
             @php
-                $score  = $student->kpi?->overall_score ?? 100;
+                $score  = $student->kpi?->overall_score ?? 0;
                 $status = $student->kpi?->warning_status ?? 'green';
                 $colorClass = $status === 'red' ? 'red' : ($status === 'yellow' ? 'amber' : 'emerald');
             @endphp
@@ -34,7 +42,6 @@
             <div class="space-y-2 text-sm">
                 @foreach([
                     ['NIS', $student->nis],
-                    ['NISN', $student->nisn ?? '-'],
                     ['Jenis Kelamin', $student->gender_label],
                     ['Tempat Lahir', $student->birth_place ?? '-'],
                     ['Tanggal Lahir', $student->birth_date?->format('d/m/Y') ?? '-'],
@@ -60,13 +67,13 @@
             <h3 class="text-sm font-semibold text-slate-800 mb-4">📊 KPI Dimensi</h3>
             @php
                 $dims = [
-                    ['Kehadiran', $student->kpi?->attendance_score ?? 100, '🕐'],
-                    ['Kedisiplinan', $student->kpi?->discipline_score ?? 100, '📋'],
-                    ['Etika Sosial', $student->kpi?->social_ethics_score ?? 100, '🤝'],
-                    ['Agresivitas', $student->kpi?->aggression_score ?? 100, '💢'],
-                    ['Integritas', $student->kpi?->integrity_score ?? 100, '⚖️'],
-                    ['Risiko Tinggi', $student->kpi?->high_risk_score ?? 100, '🚨'],
-                    ['Tren Perilaku', $student->kpi?->behavior_trend_score ?? 100, '📈'],
+                    ['Kehadiran', $student->violations->where('category', 'kehadiran')->isEmpty() ? 0 : ($student->kpi?->attendance_score ?? 0), '🕐'],
+                    ['Kedisiplinan', $student->violations->where('category', 'kedisiplinan')->isEmpty() ? 0 : ($student->kpi?->discipline_score ?? 0), '📋'],
+                    ['Etika Sosial', $student->violations->where('category', 'etika_sosial')->isEmpty() ? 0 : ($student->kpi?->social_ethics_score ?? 0), '🤝'],
+                    ['Agresivitas', $student->violations->where('category', 'agresivitas')->isEmpty() ? 0 : ($student->kpi?->aggression_score ?? 0), '💢'],
+                    ['Integritas', $student->violations->where('category', 'integritas')->isEmpty() ? 0 : ($student->kpi?->integrity_score ?? 0), '⚖️'],
+                    ['Risiko Tinggi', $student->violations->where('category', 'risiko_tinggi')->isEmpty() ? 0 : ($student->kpi?->high_risk_score ?? 0), '🚨'],
+                    ['Tren Perilaku', $student->kpi?->behavior_trend_score ?? 0, '📈'],
                 ];
             @endphp
             <div class="space-y-3">
@@ -74,11 +81,11 @@
                 <div>
                     <div class="flex justify-between text-xs mb-1">
                         <span class="text-slate-500">{{ $icon }} {{ $name }}</span>
-                        <span class="font-semibold {{ $val >= 80 ? 'text-emerald-400' : ($val >= 60 ? 'text-amber-400' : 'text-red-400') }}">{{ number_format($val, 1) }}</span>
+                        <span class="font-semibold {{ $val <= 20 ? 'text-emerald-400' : ($val <= 40 ? 'text-amber-400' : 'text-red-400') }}">{{ round($val) }}/100</span>
                     </div>
                     <div class="w-full bg-slate-100 rounded-full h-2">
-                        <div class="h-2 rounded-full transition-all duration-700 {{ $val >= 80 ? 'bg-emerald-500' : ($val >= 60 ? 'bg-amber-500' : 'bg-red-500') }}"
-                             style="width:{{ $val }}%"></div>
+                        <div class="h-2 rounded-full transition-all duration-700"
+                              style="width:{{ $val }}%; background: {{ $val <= 20 ? 'linear-gradient(90deg, #10b981, #059669)' : ($val <= 40 ? 'linear-gradient(90deg, #f59e0b, #d97706)' : 'linear-gradient(90deg, #f43f5e, #dc2626)') }}"></div>
                     </div>
                 </div>
                 @endforeach
@@ -90,6 +97,7 @@
         </div>
 
         {{-- Recommendations --}}
+        @if(count($recommendations) > 0)
         <div class="glass-card p-6">
             <h3 class="text-sm font-semibold text-slate-800 mb-3">💡 Rekomendasi Pembinaan</h3>
             <ul class="space-y-2">
@@ -101,6 +109,7 @@
                 @endforeach
             </ul>
         </div>
+        @endif
     </div>
 
     {{-- RIGHT: Charts + Violations --}}
@@ -137,7 +146,7 @@
                                     {{ $v->severity_label }}
                                 </span>
                             </div>
-                            <p class="text-xs text-slate-500 mt-1">{{ $v->sub_category }} — {{ $v->description }}</p>
+                            <p class="text-xs text-slate-500 mt-1">{{ $v->sub_category_label }} — {{ $v->description }}</p>
                             @if($v->statementLetter)
                             <a href="{{ asset('storage/' . $v->statementLetter->generated_pdf) }}" target="_blank"
                                class="inline-flex items-center gap-1 text-xs text-indigo-400 hover:text-indigo-300 mt-1">

@@ -3,6 +3,21 @@
 @section('page-title', 'Daftar Pelanggaran')
 @section('page-subtitle', 'Riwayat seluruh pelanggaran siswa')
 
+@php
+    $backUrl = null;
+    if (request()->hasAny(['category', 'severity', 'class_id', 'student_id', 'date_from', 'date_to'])) {
+        if (request()->filled('class_id')) {
+            $backUrl = route('classes.show', request('class_id'));
+        } else {
+            $backUrl = route('dashboard');
+        }
+    }
+@endphp
+
+@if($backUrl)
+    @section('back-url', $backUrl)
+@endif
+
 @section('content')
 {{-- Filter --}}
 <div class="glass-card p-4 mb-6">
@@ -80,7 +95,7 @@
                         </a>
                     </td>
                     <td class="px-4 py-4 text-xs text-slate-600">{{ $v->category_label }}</td>
-                    <td class="px-4 py-4 text-xs text-slate-500">{{ $v->sub_category }}</td>
+                    <td class="px-4 py-4 text-xs text-slate-500">{{ $v->sub_category_label }}</td>
                     <td class="px-4 py-4 text-center">
                         <span class="text-xs px-2 py-0.5 rounded-full font-medium
                             {{ $v->severity === 'berat' ? 'bg-red-500/20 text-red-400' : ($v->severity === 'sedang' ? 'bg-amber-500/20 text-amber-400' : 'bg-yellow-500/20 text-yellow-400') }}">

@@ -19,7 +19,7 @@ class EarlyWarningService
         if ($kpi->warning_status === 'red') {
             $alerts[] = [
                 'type'    => 'danger',
-                'message' => "Siswa {$student->full_name} masuk zona MERAH (skor: {$kpi->overall_score})",
+                'message' => "Siswa {$student->full_name} masuk risiko TINGGI (skor: {$kpi->overall_score})",
             ];
         }
 
@@ -76,7 +76,7 @@ class EarlyWarningService
                 'type'    => 'danger',
                 'student' => $kpi->student,
                 'score'   => $kpi->overall_score,
-                'message' => "Zona Merah — Skor: {$kpi->overall_score}",
+                'message' => "Risiko Tinggi — Skor: {$kpi->overall_score}",
             ];
         }
 
@@ -93,7 +93,7 @@ class EarlyWarningService
                 $alerts[] = [
                     'type'    => 'warning',
                     'student' => $v->student,
-                    'score'   => $v->student->kpi?->overall_score ?? 100,
+                    'score'   => $v->student->kpi?->overall_score ?? 0,
                     'message' => '3+ Pelanggaran dalam 30 hari',
                 ];
             }

@@ -45,6 +45,29 @@ class Violation extends Model
         };
     }
 
+    public function getSubCategoryLabelAttribute(): string
+    {
+        $map = [
+            'telat'             => 'Terlambat',
+            'bolos'             => 'Bolos',
+            'alpa'              => 'Alpha/Tidak Hadir',
+            'atribut'           => 'Pelanggaran Atribut',
+            'aturan'            => 'Melanggar Aturan Sekolah',
+            'administratif'     => 'Masalah Administratif',
+            'menghina'          => 'Menghina/Merendahkan',
+            'bullying_verbal'   => 'Bullying Verbal',
+            'konflik_sosial'    => 'Konflik Sosial',
+            'provokasi'         => 'Provokasi',
+            'ancaman'           => 'Ancaman/Intimidasi',
+            'berkelahi'         => 'Berkelahi',
+            'berbohong'         => 'Berbohong',
+            'mengambil_barang'  => 'Mengambil Barang Orang Lain',
+            'rokok_vape'        => 'Merokok/Vape',
+            'pelanggaran_berat' => 'Pelanggaran Berat Lainnya',
+        ];
+        return $map[$this->sub_category] ?? ucfirst(str_replace('_', ' ', $this->sub_category));
+    }
+
     public function getSeverityLabelAttribute(): string
     {
         return match ($this->severity) {

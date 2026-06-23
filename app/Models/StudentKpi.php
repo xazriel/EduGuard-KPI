@@ -46,7 +46,7 @@ class StudentKpi extends Model
     {
         return match ($this->warning_status) {
             'green'  => 'Baik',
-            'yellow' => 'Perlu Perhatian',
+            'yellow' => 'Perlu Pembinaan',
             'red'    => 'Risiko Tinggi',
             default  => '-',
         };

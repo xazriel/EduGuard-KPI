@@ -27,8 +27,11 @@ class ViolationService
             $violation = Violation::create(array_merge($data, ['created_by' => $createdBy]));
             $student   = Student::find($data['student_id']);
 
-            // 2. Generate statement letter PDF
-            $letter = $this->pdfService->generateStatementLetter($violation);
+            // 2. Generate statement letter PDF only if follow_up starts with 'Pembinaan'
+            $letter = null;
+            if ($violation->follow_up && str_starts_with($violation->follow_up, 'Pembinaan')) {
+                $letter = $this->pdfService->generateStatementLetter($violation);
+            }
 
             // 3. Recalculate KPI
             $kpi = $this->kpiEngine->recalculate($student);
