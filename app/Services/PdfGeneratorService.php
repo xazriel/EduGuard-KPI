@@ -15,9 +15,14 @@ class PdfGeneratorService
 
         $violations = $violation->student->violations()
             ->get()
+            ->filter(function($v) {
+                return str_starts_with($v->follow_up, 'Pembinaan');
+            })
             ->map(function($v) {
                 return $v->category_label . ' — ' . $v->sub_category_label . ($v->description ? ' (' . $v->description . ')' : '');
-            })->toArray();
+            })
+            ->values()
+            ->toArray();
 
         $pdf = Pdf::loadView('pdf.statement-letter', [
             'violation'  => $violation,
