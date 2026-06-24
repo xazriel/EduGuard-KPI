@@ -53,8 +53,12 @@
             <td>{{ $s->schoolClass?->class_name ?? '-' }}</td>
             <td style="text-align: center; font-weight: bold;">{{ $s->kpi?->overall_score ?? 0 }}</td>
             <td>
-                <span class="badge badge-{{ $s->kpi?->warning_status ?? 'green' }}">
-                    {{ $s->kpi?->status_label ?? 'Baik' }}
+                @php
+                    $status = $s->kpi?->warning_status ?? 'green';
+                    $badgeColor = $status === 'red' ? 'red' : 'yellow';
+                @endphp
+                <span class="badge badge-{{ $badgeColor }}">
+                    {{ $s->kpi?->status_label ?? 'Perlu Pembinaan' }}
                 </span>
             </td>
         </tr>

@@ -20,9 +20,8 @@
 
         <select name="warning_status" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
             <option value="">Semua Status</option>
-            <option value="green"  {{ request('warning_status') === 'green'  ? 'selected' : '' }}>🟢 Baik</option>
-            <option value="yellow" {{ request('warning_status') === 'yellow' ? 'selected' : '' }}>🟡 Perlu Pembinaan</option>
-            <option value="red"    {{ request('warning_status') === 'red'    ? 'selected' : '' }}>🔴 Risiko Tinggi</option>
+            <option value="pembinaan" {{ request('warning_status') === 'pembinaan' ? 'selected' : '' }}>🟡 Perlu Pembinaan</option>
+            <option value="red"       {{ request('warning_status') === 'red'       ? 'selected' : '' }}>🔴 Risiko Tinggi</option>
         </select>
 
         <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-5 py-2.5 rounded-xl transition-colors font-medium">Filter</button>
@@ -64,7 +63,7 @@
                 @php
                     $score  = $student->kpi?->overall_score ?? 0;
                     $status = $student->kpi?->warning_status ?? 'green';
-                    $colorClass = $status === 'red' ? 'red' : ($status === 'yellow' ? 'amber' : 'emerald');
+                    $colorClass = $status === 'red' ? 'red' : 'amber';
                 @endphp
                 <tr class="hover:bg-slate-100/30 transition-colors group">
                     <td class="px-6 py-4">
@@ -95,7 +94,7 @@
                         <span class="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full
                             bg-{{ $colorClass }}-500/15 text-{{ $colorClass }}-400 border border-{{ $colorClass }}-500/30">
                             <span class="w-1.5 h-1.5 rounded-full bg-{{ $colorClass }}-400 inline-block"></span>
-                            {{ $student->kpi?->status_label ?? 'Baik' }}
+                            {{ $student->kpi?->status_label ?? 'Perlu Pembinaan' }}
                         </span>
                     </td>
                     <td class="px-4 py-4 text-center text-slate-500">

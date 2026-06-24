@@ -33,7 +33,7 @@ class StudentsExport implements FromCollection, WithHeadings, WithMapping, WithS
             $student->gender === 'L' ? 'Laki-laki' : 'Perempuan',
             $student->schoolClass?->class_name,
             $kpi?->overall_score ?? 0,
-            $kpi ? strtoupper($kpi->warning_status) : 'GREEN',
+            $kpi?->status_label ?? 'Perlu Pembinaan',
             $kpi?->attendance_score ?? 0,
             $kpi?->discipline_score ?? 0,
             $kpi?->social_ethics_score ?? 0,

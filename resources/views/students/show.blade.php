@@ -21,7 +21,7 @@
             @php
                 $score  = $student->kpi?->overall_score ?? 0;
                 $status = $student->kpi?->warning_status ?? 'green';
-                $colorClass = $status === 'red' ? 'red' : ($status === 'yellow' ? 'amber' : 'emerald');
+                $colorClass = $status === 'red' ? 'red' : 'amber';
             @endphp
             <div class="flex flex-col items-center text-center mb-6">
                 <div class="relative mb-3">
@@ -29,13 +29,13 @@
                         {{ substr($student->full_name, 0, 1) }}
                     </div>
                     <span class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-2 border-slate-100
-                        {{ $status === 'green' ? 'bg-emerald-500' : ($status === 'yellow' ? 'bg-amber-500' : 'bg-red-500') }}"></span>
+                        {{ $status === 'red' ? 'bg-red-500' : 'bg-amber-500' }}"></span>
                 </div>
                 <h2 class="text-lg font-bold text-slate-800">{{ $student->full_name }}</h2>
                 <p class="text-sm text-slate-500">{{ $student->schoolClass?->class_name }}</p>
                 <span class="mt-2 text-xs px-3 py-1 rounded-full font-semibold
                     bg-{{ $colorClass }}-500/20 text-{{ $colorClass }}-400 border border-{{ $colorClass }}-500/30">
-                    {{ $student->kpi?->status_label ?? 'Baik' }}
+                    {{ $student->kpi?->status_label ?? 'Perlu Pembinaan' }}
                 </span>
             </div>
 

@@ -14,7 +14,7 @@
             <svg class="w-16 h-16 -rotate-90" viewBox="0 0 36 36">
                 <circle cx="18" cy="18" r="15.9" fill="none" stroke="#1f2937" stroke-width="3"/>
                 <circle cx="18" cy="18" r="15.9" fill="none"
-                    stroke="{{ $overall <= 20 ? '#22c55e' : ($overall <= 40 ? '#eab308' : '#ef4444') }}"
+                    stroke="{{ $overall <= 40 ? '#eab308' : '#ef4444' }}"
                     stroke-width="3" stroke-dasharray="{{ $overall }},100" stroke-linecap="round"/>
             </svg>
             <span class="absolute inset-0 flex items-center justify-center text-sm font-bold text-slate-800">{{ $overall }}</span>
@@ -22,8 +22,8 @@
         <div>
             <p class="text-xs text-slate-400">Rata-rata KPI</p>
             <p class="font-semibold text-white">{{ $class->class_name }}</p>
-            <p class="text-xs {{ $overall <= 20 ? 'text-emerald-400' : ($overall <= 40 ? 'text-amber-400' : 'text-red-400') }}">
-                {{ $overall <= 20 ? 'Baik' : ($overall <= 40 ? 'Perlu Pembinaan' : 'Risiko Tinggi') }}
+            <p class="text-xs {{ $overall <= 40 ? 'text-amber-400' : 'text-red-400' }}">
+                {{ $overall <= 40 ? 'Perlu Pembinaan' : 'Risiko Tinggi' }}
             </p>
         </div>
     </div>
@@ -34,11 +34,11 @@
     ] as $dim)
     <div class="glass-card p-4">
         <p class="text-xs text-slate-400 mb-1">{{ $dim['icon'] }} {{ $dim['label'] }}</p>
-        <p class="text-2xl font-bold {{ $avgKpi[$dim['key']] <= 20 ? 'text-emerald-400' : ($avgKpi[$dim['key']] <= 40 ? 'text-amber-400' : 'text-red-400') }}">
+        <p class="text-2xl font-bold {{ $avgKpi[$dim['key']] <= 40 ? 'text-amber-400' : 'text-red-400' }}">
             {{ $avgKpi[$dim['key']] }}
         </p>
         <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2">
-            <div class="h-1.5 rounded-full {{ $avgKpi[$dim['key']] <= 20 ? 'bg-emerald-500' : ($avgKpi[$dim['key']] <= 40 ? 'bg-amber-500' : 'bg-red-500') }}"
+            <div class="h-1.5 rounded-full {{ $avgKpi[$dim['key']] <= 40 ? 'bg-amber-500' : 'bg-red-500' }}"
                  style="width:{{ $avgKpi[$dim['key']] }}%"></div>
         </div>
     </div>
@@ -83,7 +83,7 @@
                     <td class="py-3">
                         <div class="flex items-center gap-2">
                             <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
-                                {{ $student->kpi?->warning_status === 'red' ? 'bg-red-500/20 text-red-400' : ($student->kpi?->warning_status === 'yellow' ? 'bg-amber-500/20 text-amber-400' : 'bg-emerald-500/20 text-emerald-400') }}">
+                                {{ $student->kpi?->warning_status === 'red' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400' }}">
                                 {{ substr($student->full_name, 0, 1) }}
                             </div>
                             <span class="font-medium text-slate-700">{{ $student->full_name }}</span>
@@ -91,14 +91,14 @@
                     </td>
                     <td class="py-3 text-slate-500 font-mono text-xs">{{ $student->nis }}</td>
                     <td class="py-3 text-center">
-                        <span class="font-bold {{ ($student->kpi?->overall_score ?? 0) <= 20 ? 'text-emerald-400' : (($student->kpi?->overall_score ?? 0) <= 40 ? 'text-amber-400' : 'text-red-400') }}">
+                        <span class="font-bold {{ ($student->kpi?->overall_score ?? 0) <= 40 ? 'text-amber-400' : 'text-red-400' }}">
                             {{ $student->kpi?->overall_score ?? 0 }}
                         </span>
                     </td>
                     <td class="py-3 text-center">
                         <span class="text-xs px-2 py-0.5 rounded-full font-medium
-                            {{ $student->kpi?->warning_status === 'red' ? 'bg-red-500/20 text-red-400' : ($student->kpi?->warning_status === 'yellow' ? 'bg-amber-500/20 text-amber-400' : 'bg-emerald-500/20 text-emerald-400') }}">
-                            {{ $student->kpi?->status_label ?? 'Baik' }}
+                            {{ $student->kpi?->warning_status === 'red' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400' }}">
+                            {{ $student->kpi?->status_label ?? 'Perlu Pembinaan' }}
                         </span>
                     </td>
                     <td class="py-3 text-center text-slate-500">{{ $student->violations->count() }}</td>

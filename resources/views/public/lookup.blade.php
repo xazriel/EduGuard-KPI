@@ -65,7 +65,7 @@
                     </div>
                     <input type="text" name="query" id="queryInput"
                            value="{{ old('query') }}"
-                           placeholder="Contoh: 00000001"
+                           placeholder="Contoh: 0000000001"
                            autocomplete="off"
                            class="w-full bg-white border {{ $errors->has('query') ? 'border-red-500' : 'border-slate-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500' }} text-slate-700 text-base rounded-2xl pl-12 pr-4 py-4 focus:outline-none placeholder-slate-400 transition-colors">
                 </div>

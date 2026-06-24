@@ -27,8 +27,8 @@
 @php
     $score  = $student->kpi?->overall_score ?? 0;
     $status = $student->kpi?->warning_status ?? 'green';
-    $colorClass = $status === 'red' ? 'red' : ($status === 'yellow' ? 'amber' : 'emerald');
-    $statusLabel = $status === 'red' ? 'Risiko Tinggi' : ($status === 'yellow' ? 'Perlu Pembinaan' : 'Perilaku Baik');
+    $colorClass = $status === 'red' ? 'red' : 'amber';
+    $statusLabel = $status === 'red' ? 'Risiko Tinggi' : 'Perlu Pembinaan';
 @endphp
 
 <main class="max-w-5xl mx-auto px-6 py-8 fade-in">
@@ -42,14 +42,14 @@
                     {{ substr($student->full_name, 0, 1) }}
                 </div>
                 <span class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-2 border-slate-100
-                    {{ $status === 'green' ? 'bg-emerald-500' : ($status === 'yellow' ? 'bg-amber-500' : 'bg-red-500') }}"></span>
+                    {{ $status === 'red' ? 'bg-red-500' : 'bg-amber-500' }}"></span>
             </div>
             <div class="flex-1">
                 <h1 class="text-2xl font-black text-slate-800">{{ $student->full_name }}</h1>
                 <p class="text-slate-500 mt-1">{{ $student->schoolClass?->class_name }} · NIS: {{ $student->nis }}</p>
                 <div class="flex flex-wrap gap-2 mt-3">
                     <span class="text-xs px-3 py-1 rounded-full font-semibold border
-                        {{ $status === 'green' ? 'bg-emerald-500/20 text-emerald-600 border-emerald-500/30' : ($status === 'yellow' ? 'bg-amber-500/20 text-amber-600 border-amber-500/30' : 'bg-red-500/20 text-red-600 border-red-500/30') }}">
+                        {{ $status === 'red' ? 'bg-red-500/20 text-red-600 border-red-500/30' : 'bg-amber-500/20 text-amber-600 border-amber-500/30' }}">
                         {{ $statusLabel }}
                     </span>
                     <span class="text-xs px-3 py-1 rounded-full bg-white/80 text-slate-600 border border-slate-200">{{ $student->gender_label }}</span>

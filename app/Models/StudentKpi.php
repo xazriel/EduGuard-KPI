@@ -35,7 +35,7 @@ class StudentKpi extends Model
     public function getStatusColorAttribute(): string
     {
         return match ($this->warning_status) {
-            'green'  => '#22c55e',
+            'green'  => '#eab308',
             'yellow' => '#eab308',
             'red'    => '#ef4444',
             default  => '#6b7280',
@@ -45,7 +45,7 @@ class StudentKpi extends Model
     public function getStatusLabelAttribute(): string
     {
         return match ($this->warning_status) {
-            'green'  => 'Baik',
+            'green'  => 'Perlu Pembinaan',
             'yellow' => 'Perlu Pembinaan',
             'red'    => 'Risiko Tinggi',
             default  => '-',

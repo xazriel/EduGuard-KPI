@@ -22,7 +22,11 @@ class StudentController extends Controller
             $query->where('class_id', $request->class_id);
         }
         if ($request->filled('warning_status')) {
-            $query->whereHas('kpi', fn($q) => $q->where('warning_status', $request->warning_status));
+            if ($request->warning_status === 'pembinaan') {
+                $query->whereHas('kpi', fn($q) => $q->whereIn('warning_status', ['green', 'yellow']));
+            } else {
+                $query->whereHas('kpi', fn($q) => $q->where('warning_status', $request->warning_status));
+            }
         }
 
         $students = $query->orderBy('full_name')->paginate(20)->withQueryString();
