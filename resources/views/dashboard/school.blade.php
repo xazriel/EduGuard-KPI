@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Dashboard Sekolah')
-@section('page-title', 'Dashboard KPI Sekolah')
+@section('page-title', 'Dashboard Monitoring Pelanggaran Siswa')
 @section('page-subtitle', 'Ringkasan perilaku & pelanggaran seluruh siswa')
 
 @section('content')
