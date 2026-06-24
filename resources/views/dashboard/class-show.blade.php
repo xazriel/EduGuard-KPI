@@ -48,17 +48,11 @@
 {{-- Charts --}}
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
     <div class="lg:col-span-2 glass-card p-6">
-        <h3 class="text-sm font-semibold text-slate-800 mb-4">
-            📈 Tren Pelanggaran 6 Bulan
-            <span class="text-[10px] text-indigo-400 font-normal block mt-0.5">💡 Klik titik grafik untuk drill-down kelas ini</span>
-        </h3>
+        <h3 class="text-sm font-semibold text-slate-800 mb-4">📈 Tren Pelanggaran 6 Bulan</h3>
         <div id="chartTrend" class="h-52"></div>
     </div>
     <div class="glass-card p-6">
-        <h3 class="text-sm font-semibold text-slate-800 mb-4">
-            📊 Kategori Dominan
-            <span class="text-[10px] text-indigo-400 font-normal block mt-0.5">💡 Klik bagian diagram untuk drill-down kelas ini</span>
-        </h3>
+        <h3 class="text-sm font-semibold text-slate-800 mb-4">📊 Kategori Dominan</h3>
         <div id="chartCat" class="h-52"></div>
     </div>
 </div>

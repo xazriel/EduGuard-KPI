@@ -68,18 +68,12 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
     {{-- Monthly Trend --}}
     <div class="lg:col-span-2 glass-card p-6">
-        <h3 class="text-sm font-semibold text-slate-800 mb-4">
-            📈 Tren Pelanggaran 6 Bulan Terakhir
-            <span class="text-[10px] text-indigo-400 font-normal block mt-0.5">💡 Klik titik grafik untuk drill-down data</span>
-        </h3>
+        <h3 class="text-sm font-semibold text-slate-800 mb-4">📈 Tren Pelanggaran 6 Bulan Terakhir</h3>
         <div id="chartMonthly" class="h-56"></div>
     </div>
     {{-- Category Pie --}}
     <div class="glass-card p-6">
-        <h3 class="text-sm font-semibold text-slate-800 mb-4">
-            📊 Kategori Pelanggaran
-            <span class="text-[10px] text-indigo-400 font-normal block mt-0.5">💡 Klik bagian diagram untuk drill-down data</span>
-        </h3>
+        <h3 class="text-sm font-semibold text-slate-800 mb-4">📊 Kategori Pelanggaran</h3>
         <div id="chartCategory" class="h-56"></div>
     </div>
 </div>
@@ -139,10 +133,7 @@
 
 {{-- Severity Distribution --}}
 <div class="glass-card p-6">
-    <h3 class="text-sm font-semibold text-slate-800 mb-4">
-        📋 Distribusi Tingkat Keparahan Pelanggaran
-        <span class="text-[10px] text-indigo-400 font-normal block mt-0.5">💡 Klik batang diagram untuk drill-down data</span>
-    </h3>
+    <h3 class="text-sm font-semibold text-slate-800 mb-4">📋 Distribusi Tingkat Keparahan Pelanggaran</h3>
     <div id="chartSeverity" class="h-48"></div>
 </div>
 
