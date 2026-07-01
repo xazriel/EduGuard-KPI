@@ -23,9 +23,9 @@ Pencatatan pelanggaran dengan pembagian kategori terstruktur dan penalti skor ot
 * **Kehadiran**: Terlambat (-5), Bolos (-15), Alpa (-20).
 * **Kedisiplinan**: Atribut (-5), Aturan (-10), Administratif (-10).
 * **Etika Sosial**: Menghina (-15), Bullying Verbal (-20), Konflik Sosial (-25).
-* **Agresivitas**: Provokasi (-20), Ancaman (-25), Berkelahi (-35).
+* **Agresivitas**: Provokasi (-20), Ancaman (-25).
+* **Risiko Tinggi**: Berkelahi (-35), Rokok/Vape (-40), Pelanggaran Berat (-50).
 * **Integritas**: Berbohong (-15), Mengambil Barang Orang Lain (-30).
-* **Risiko Tinggi**: Rokok/Vape (-40), Pelanggaran Berat (-50).
 
 ### 4. ⚠️ Sistem Peringatan Dini (Early Warning System)
 Mendeteksi secara otomatis 4 kondisi kritis siswa:

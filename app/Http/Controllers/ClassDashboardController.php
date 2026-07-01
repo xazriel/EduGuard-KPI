@@ -89,4 +89,21 @@ class ClassDashboardController extends Controller
             'categoryData', 'highRiskStudents', 'studentRanking'
         ));
     }
+
+    public function downloadPdf(SchoolClass $class)
+    {
+        $class->load(['students' => function ($query) {
+            $query->whereHas('violations')->with(['violations' => function ($q) {
+                $q->orderBy('violation_date', 'desc');
+            }]);
+        }]);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.class-report', [
+            'class' => $class,
+            'students' => $class->students,
+            'date' => Carbon::now()->locale('id')->isoFormat('D MMMM Y'),
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->download('Laporan-Pelanggaran-Kelas-' . str_replace(' ', '-', $class->class_name) . '.pdf');
+    }
 }

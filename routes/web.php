@@ -18,6 +18,9 @@ Route::get('/', [PublicLookupController::class, 'index'])->name('home');
 Route::get('/cek-siswa', [PublicLookupController::class, 'index'])->name('public.lookup');
 Route::post('/cek-siswa', [PublicLookupController::class, 'search'])->name('public.lookup.search');
 
+Route::get('/daftar', [\App\Http\Controllers\PublicRegistrationController::class, 'create'])->name('public.register');
+Route::post('/daftar', [\App\Http\Controllers\PublicRegistrationController::class, 'store'])->name('public.register.store');
+
 /*
 |--------------------------------------------------------------------------
 | Authenticated Routes — Guru BK Only
@@ -31,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Class Dashboards
     Route::get('/kelas', [ClassDashboardController::class, 'index'])->name('classes.index');
     Route::get('/kelas/{class}', [ClassDashboardController::class, 'show'])->name('classes.show');
+    Route::get('/kelas/{class}/pdf', [ClassDashboardController::class, 'downloadPdf'])->name('classes.pdf');
 
     // Students
     Route::get('/siswa/search', [StudentController::class, 'search'])->name('students.search');
@@ -49,12 +53,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Violations
     Route::resource('/pelanggaran', ViolationController::class)
         ->parameters(['pelanggaran' => 'violation'])
-        ->except(['edit', 'update', 'destroy'])
+        ->except(['edit', 'update'])
         ->names([
-            'index'  => 'violations.index',
-            'create' => 'violations.create',
-            'store'  => 'violations.store',
-            'show'   => 'violations.show',
+            'index'   => 'violations.index',
+            'create'  => 'violations.create',
+            'store'   => 'violations.store',
+            'show'    => 'violations.show',
+            'destroy' => 'violations.destroy',
         ]);
     Route::post('/pelanggaran/{violation}/upload-scan', [ViolationController::class, 'uploadScan'])
         ->name('violations.upload-scan');

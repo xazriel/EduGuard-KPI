@@ -111,7 +111,16 @@
                         @endif
                     </td>
                     <td class="px-4 py-4 text-right">
-                        <a href="{{ route('violations.show', $v) }}" class="text-xs text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded hover:bg-indigo-500/10 transition-colors">Detail</a>
+                        <div class="flex items-center justify-end gap-2">
+                            <a href="{{ route('violations.show', $v) }}" class="text-xs text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded hover:bg-indigo-500/10 transition-colors">Detail</a>
+                            <form action="{{ route('violations.destroy', $v->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pelanggaran ini? KPI akan otomatis dihitung ulang.');" class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-xs text-red-500 hover:text-red-400 px-2 py-1 rounded hover:bg-red-500/10 transition-colors">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @empty

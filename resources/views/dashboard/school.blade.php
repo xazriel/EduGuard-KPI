@@ -47,7 +47,7 @@
 </div>
 
 {{-- Warning Status Distribution --}}
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+<div class="grid grid-cols-2 gap-4 mb-6">
     <a href="{{ route('students.index', ['warning_status' => 'yellow']) }}" class="glass-card p-4 text-center border-t-2 border-amber-500 hover:border-indigo-500/40 hover:bg-indigo-500/5 transition-all block">
         <p class="text-3xl font-bold text-amber-400">{{ $aggregates['yellow_count'] }}</p>
         <p class="text-xs text-slate-400 mt-1">🟡 Perlu Pembinaan</p>

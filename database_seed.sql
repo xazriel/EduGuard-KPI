@@ -97,7 +97,7 @@ INSERT INTO students (id, nis, full_name, gender, birth_place, birth_date, paren
 DELETE FROM violations;
 INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('1', '1', 'etika_sosial', 'bullying_verbal', 'Mengkatai teman
 Kronologi: Dilaporkan teman sekelas', 'ringan', '2026-01-15', 'Pembinaan 1', '1', '2026-06-23 15:47:34', '2026-06-23 15:47:34');
-INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('2', '2', 'agresivitas', 'berkelahi', 'Melempar botol ke muka teman
+INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('2', '2', 'risiko_tinggi', 'berkelahi', 'Melempar botol ke muka teman
 Kronologi: Terjadi saat jam istirahat', 'sedang', '2026-01-15', 'Pembinaan 1', '1', '2026-06-23 15:47:34', '2026-06-23 15:47:34');
 INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('3', '3', 'etika_sosial', 'menghina', 'Menghina orang dengan sebutan tidak pantas
 Kronologi: Korban melapor ke wali kelas', 'sedang', '2026-01-15', 'Pembinaan 1', '1', '2026-06-23 15:47:34', '2026-06-23 15:47:34');
@@ -131,12 +131,12 @@ Kronologi: Foto tersebar di grup kelas
 Catatan BK: Koordinasi dengan orang tua', 'berat', '2026-02-21', 'Pembinaan 1', '1', '2026-06-23 15:47:36', '2026-06-23 15:47:36');
 INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('16', '11', 'kehadiran', 'alpa', 'Tidak masuk sekolah 16 kali
 Kronologi: Surat teguran dikirim ke orang tua', 'berat', '2025-06-19', 'Pembinaan 1', '1', '2026-06-23 15:47:36', '2026-06-23 15:47:36');
-INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('17', '11', 'agresivitas', 'berkelahi', 'Berkelahi dengan teman satu sekolah
+INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('17', '11', 'risiko_tinggi', 'berkelahi', 'Berkelahi dengan teman satu sekolah
 Kronologi: Terjadi di koridor sekolah', 'berat', '2026-02-21', 'Pembinaan 2', '1', '2026-06-23 15:47:36', '2026-06-23 15:47:36');
 INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('18', '11', 'kehadiran', 'alpa', 'Sering tidak masuk sekolah
 Kronologi: Pola berulang sejak kelas 7
 Catatan BK: ⚠️ PRIORITAS PEMBINAAN', 'sedang', '2026-02-22', 'Pembinaan 3', '1', '2026-06-23 15:47:36', '2026-06-23 15:47:36');
-INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('19', '12', 'agresivitas', 'berkelahi', 'Berkelahi dengan teman di kelas dan toilet
+INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('19', '12', 'risiko_tinggi', 'berkelahi', 'Berkelahi dengan teman di kelas dan toilet
 Kronologi: Laporan guru kelas', 'berat', '2026-02-11', 'Pembinaan 1', '1', '2026-06-23 15:47:36', '2026-06-23 15:47:36');
 INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('20', '12', 'agresivitas', 'provokasi', 'Mengajak teman menyaksikan duel, berkelahi lagi
 Kronologi: Terjadi di taman sekolah
@@ -188,10 +188,10 @@ INSERT INTO violations (id, student_id, category, sub_category, description, sev
 Kronologi: Orang tua tidak memberikan izin', 'sedang', '2026-02-27', 'Pembinaan 1', '1', '2026-06-23 15:47:38', '2026-06-23 15:47:38');
 INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('41', '25', 'integritas', 'mengambil_barang', 'Mengambil HP tanpa izin dari petugas perpustakaan
 Kronologi: Laporan petugas perpustakaan', 'sedang', '2026-02-27', 'Pembinaan 1', '1', '2026-06-23 15:47:38', '2026-06-23 15:47:38');
-INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('42', '26', 'agresivitas', 'berkelahi', 'Menarik rambut teman (Yuliana)
+INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('42', '26', 'risiko_tinggi', 'berkelahi', 'Menarik rambut teman (Yuliana)
 Kronologi: Laporan korban langsung ke BK
 Catatan BK: Kasus bullying kolektif kelas 7.8', 'sedang', '2025-12-10', 'Pembinaan 1', '1', '2026-06-23 15:47:38', '2026-06-23 15:47:38');
-INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('43', '26', 'agresivitas', 'berkelahi', 'Berantem dengan Arkana
+INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('43', '26', 'risiko_tinggi', 'berkelahi', 'Berantem dengan Arkana
 Kronologi: Terjadi di halaman sekolah
 Catatan BK: ⚠️ PRIORITAS PEMBINAAN', 'berat', '2026-01-06', 'Pembinaan 2', '1', '2026-06-23 15:47:38', '2026-06-23 15:47:38');
 INSERT INTO violations (id, student_id, category, sub_category, description, severity, violation_date, follow_up, created_by, created_at, updated_at) VALUES ('44', '27', 'etika_sosial', 'bullying_verbal', 'Ikut-ikutan membully Yuliana

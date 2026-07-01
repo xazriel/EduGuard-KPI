@@ -24,7 +24,7 @@
 <body>
 <div class="header">
     <h1>LAPORAN PELANGGARAN SISWA — Dashboard Pelanggaran Siswa</h1>
-    <p>SMA/SMK Negeri — Sistem Monitoring Perilaku Siswa</p>
+    <p>SMPN 216 JAKARTA — Sistem Monitoring Perilaku Siswa</p>
 </div>
 <h2>Laporan Data Pelanggaran</h2>
 <div class="meta">

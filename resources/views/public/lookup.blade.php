@@ -22,12 +22,10 @@
     <header class="border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-20">
         <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                </div>
+                <img src="{{ asset('logo-smpn216.png') }}" alt="Logo SMPN 216" class="w-10 h-10 object-contain">
                 <div>
-                    <p class="font-bold text-slate-800 text-sm">Dashboard Pelanggaran Siswa</p>
-                    <p class="text-xs text-indigo-400">Portal Siswa & Orang Tua</p>
+                    <p class="font-bold text-slate-800 text-sm">SMPN 216 JAKARTA</p>
+                    <p class="text-xs text-indigo-400 font-semibold">Dashboard Monitoring Pelanggaran Siswa</p>
                 </div>
             </div>
             <a href="{{ route('login') }}" class="text-xs text-gray-500 hover:text-slate-800 border border-slate-300 hover:border-gray-500 px-3 py-1.5 rounded-lg transition-colors">
@@ -57,6 +55,12 @@
             </p>
 
             {{-- Search Form --}}
+            @if(session('success'))
+            <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-600 rounded-2xl text-sm font-medium">
+                ✅ {{ session('success') }}
+            </div>
+            @endif
+
             <form method="POST" action="{{ route('public.lookup.search') }}" class="space-y-4">
                 @csrf
                 <div class="relative">
@@ -82,6 +86,10 @@
                     Cari Data Siswa
                 </button>
             </form>
+
+            <div class="mt-6 text-center text-sm text-slate-500">
+                Siswa Baru? <a href="{{ route('public.register') }}" class="text-indigo-500 font-bold hover:text-indigo-600 transition-colors">Daftar di sini</a>
+            </div>
 
             {{-- Features --}}
             <div class="mt-10 grid grid-cols-3 gap-3">

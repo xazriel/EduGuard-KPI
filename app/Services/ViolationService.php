@@ -60,6 +60,40 @@ class ViolationService
         });
     }
 
+    public function deleteViolation(Violation $violation): array
+    {
+        return DB::transaction(function () use ($violation) {
+            $student = $violation->student;
+
+            if ($violation->statementLetter) {
+                if ($violation->statementLetter->generated_pdf) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($violation->statementLetter->generated_pdf);
+                }
+                if ($violation->statementLetter->scanned_signed_file) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($violation->statementLetter->scanned_signed_file);
+                }
+                $violation->statementLetter()->delete();
+            }
+
+            ActivityLog::create([
+                'student_id' => $student->id,
+                'activity'   => "Pelanggaran dihapus: {$violation->sub_category} ({$violation->severity})",
+                'metadata'   => json_encode(['violation_id' => $violation->id]),
+                'created_at' => now(),
+            ]);
+
+            $violation->delete();
+
+            $kpi = $this->kpiEngine->recalculate($student);
+            $alerts = $this->warningService->checkAndAlert($student);
+
+            return [
+                'kpi' => $kpi,
+                'alerts' => $alerts,
+            ];
+        });
+    }
+
     public function getSubCategories(): array
     {
         return [
@@ -81,13 +115,13 @@ class ViolationService
             'agresivitas' => [
                 'provokasi'  => 'Provokasi (-20)',
                 'ancaman'    => 'Ancaman/Intimidasi (-25)',
-                'berkelahi'  => 'Berkelahi (-35)',
             ],
             'integritas' => [
                 'berbohong'        => 'Berbohong (-15)',
                 'mengambil_barang' => 'Mengambil Barang Orang Lain (-30)',
             ],
             'risiko_tinggi' => [
+                'berkelahi'         => 'Berkelahi (-35)',
                 'rokok_vape'        => 'Merokok/Vape (-40)',
                 'pelanggaran_berat' => 'Pelanggaran Berat Lainnya (-50)',
             ],

@@ -98,6 +98,16 @@ class ViolationController extends Controller
             ['scanned_signed_file' => $path]
         );
 
-        return back()->with('success', 'Scan surat berhasil diunggah.');
+        return back()->with('success', 'File hasil scan berhasil diunggah.');
+    }
+
+    public function destroy(Violation $violation)
+    {
+        $studentId = $violation->student_id;
+        
+        $this->violationService->deleteViolation($violation);
+
+        return redirect()->route('students.show', $studentId)
+            ->with('success', 'Data pelanggaran berhasil dihapus dan KPI telah dihitung ulang.');
     }
 }

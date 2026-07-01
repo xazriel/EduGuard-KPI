@@ -155,7 +155,16 @@
                             </a>
                             @endif
                         </div>
-                        <span class="text-xs text-slate-300 whitespace-nowrap">{{ $v->violation_date->format('d/m/Y') }}</span>
+                        <div class="flex flex-col items-end gap-2">
+                            <span class="text-xs text-slate-400 font-medium whitespace-nowrap">{{ $v->violation_date->format('d/m/Y') }}</span>
+                            <form action="{{ route('violations.destroy', $v->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pelanggaran ini? Poin KPI siswa akan otomatis dihitung ulang.');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-[10px] bg-red-500/10 hover:bg-red-500/20 text-red-500 px-2 py-1 rounded transition-colors">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 @empty

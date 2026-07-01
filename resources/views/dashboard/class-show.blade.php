@@ -61,7 +61,15 @@
 <div class="glass-card p-6">
     <div class="flex items-center justify-between mb-4">
         <h3 class="text-sm font-semibold text-slate-800">👥 Ranking Siswa berdasarkan KPI</h3>
-        <a href="{{ route('violations.create') }}" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition-colors">+ Input Pelanggaran</a>
+        <div class="flex gap-2">
+            <a href="{{ route('classes.pdf', $class->id) }}" target="_blank" class="text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 shadow-sm font-bold" style="background-color: #10b981; color: #ffffff; border: 1px solid #059669;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                Download Pelanggaran
+            </a>
+            <a href="{{ route('violations.create') }}" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                + Input Pelanggaran
+            </a>
+        </div>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
