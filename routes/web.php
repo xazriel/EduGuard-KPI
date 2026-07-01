@@ -7,19 +7,17 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ViolationController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\PublicLookupController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
 | Public Routes — No Login Required
-|--------------------------------------------------------------------------
 */
 Route::get('/', [PublicLookupController::class, 'index'])->name('home');
 Route::get('/cek-siswa', [PublicLookupController::class, 'index'])->name('public.lookup');
 Route::post('/cek-siswa', [PublicLookupController::class, 'search'])->name('public.lookup.search');
 
-Route::get('/daftar', [\App\Http\Controllers\PublicRegistrationController::class, 'create'])->name('public.register');
-Route::post('/daftar', [\App\Http\Controllers\PublicRegistrationController::class, 'store'])->name('public.register.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +61,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
     Route::post('/pelanggaran/{violation}/upload-scan', [ViolationController::class, 'uploadScan'])
         ->name('violations.upload-scan');
+
+    // Users (Guru BK)
+    Route::resource('/pengguna', UserController::class)
+        ->parameters(['pengguna' => 'user'])
+        ->except(['show'])
+        ->names([
+            'index'   => 'users.index',
+            'create'  => 'users.create',
+            'store'   => 'users.store',
+            'edit'    => 'users.edit',
+            'update'  => 'users.update',
+            'destroy' => 'users.destroy',
+        ]);
 
     // Export
     Route::prefix('export')->name('export.')->group(function () {

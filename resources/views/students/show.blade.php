@@ -182,12 +182,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const base = { chart:{background:'transparent',toolbar:{show:false},fontFamily:'Inter'}, theme:{mode:'dark'}, tooltip:{theme:'dark'}, grid:{borderColor:'#1f2937'} };
     new ApexCharts(document.getElementById('chartTrend'), {
         ...base,
-        chart: { ...base.chart, type:'bar', height:200 },
+        chart: { ...base.chart, type:'line', height:200 },
         series: [{ name:'Pelanggaran', data: @json($counts) }],
         xaxis: { categories: @json($months), labels:{style:{colors:'#64748b',fontSize:'11px'}} },
         yaxis: { labels:{style:{colors:'#64748b'}}, min:0, forceNiceScale:true },
+        stroke: { curve: 'smooth', width: 3 },
         colors: ['#6366f1'],
-        plotOptions: { bar:{borderRadius:4, columnWidth:'50%'} },
     }).render();
 
     @if($categoryBreakdown->count())

@@ -23,8 +23,8 @@
 </head>
 <body>
 <div class="header">
-    <h1>LAPORAN KPI SISWA — Dashboard Pelanggaran Siswa</h1>
-    <p>SMPN 216 JAKARTA — Sistem Monitoring Perilaku Siswa</p>
+    <h1>LAPORAN MONITORING PELANGGARAN SISWA SMPN 216 JAKARTA</h1>
+    <p>Sistem Monitoring Perilaku dan Pelanggaran Siswa</p>
 </div>
 <h2>Laporan Data & Nilai KPI Siswa</h2>
 <div class="meta">

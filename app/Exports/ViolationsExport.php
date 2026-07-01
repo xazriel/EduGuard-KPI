@@ -25,7 +25,12 @@ class ViolationsExport implements FromCollection, WithHeadings, WithMapping, Wit
 
     public function headings(): array
     {
-        return ['No','Tanggal','NIS','Nama Siswa','Kelas','Kategori','Sub Kategori','Keterangan','Severity','Tindak Lanjut','Dicatat Oleh'];
+        return [
+            ['LAPORAN MONITORING PELANGGARAN SISWA SMPN 216 JAKARTA'],
+            ['Sistem Monitoring Perilaku dan Pelanggaran Siswa'],
+            [],
+            ['No','Tanggal','NIS','Nama Siswa','Kelas','Kategori','Sub Kategori','Keterangan','Severity','Tindak Lanjut','Dicatat Oleh']
+        ];
     }
 
     public function map($violation): array
@@ -49,6 +54,10 @@ class ViolationsExport implements FromCollection, WithHeadings, WithMapping, Wit
 
     public function styles(Worksheet $sheet): array
     {
-        return [1 => ['font' => ['bold' => true]]];
+        return [
+            1 => ['font' => ['bold' => true, 'size' => 14]],
+            2 => ['font' => ['bold' => true, 'size' => 12]],
+            4 => ['font' => ['bold' => true]],
+        ];
     }
 }

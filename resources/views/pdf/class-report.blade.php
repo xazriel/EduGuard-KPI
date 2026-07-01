@@ -21,10 +21,10 @@
 </head>
 <body>
 <div class="header">
-    <h1>LAPORAN PELANGGARAN KELAS {{ $class->class_name }}</h1>
-    <p>SMPN 216 JAKARTA — Sistem Monitoring Perilaku Siswa</p>
+    <h1>LAPORAN MONITORING PELANGGARAN SISWA SMPN 216 JAKARTA</h1>
+    <p>Sistem Monitoring Perilaku dan Pelanggaran Siswa</p>
 </div>
-<h2>Daftar Siswa Bermasalah dan Riwayat Pelanggaran</h2>
+<h2>Laporan Kelas: {{ $class->class_name }}</h2>
 <div class="meta">
     <span>Tanggal Cetak: {{ $date }}</span>
     <span>Total: {{ count($students) }} siswa dengan catatan pelanggaran</span>

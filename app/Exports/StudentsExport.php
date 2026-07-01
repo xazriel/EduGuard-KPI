@@ -18,7 +18,12 @@ class StudentsExport implements FromCollection, WithHeadings, WithMapping, WithS
 
     public function headings(): array
     {
-        return ['No','NIS','Nama Lengkap','L/P','Kelas','Skor Keseluruhan','Status','Kehadiran','Disiplin','Etika Sosial','Agresivitas','Integritas','Risiko Tinggi'];
+        return [
+            ['LAPORAN MONITORING PELANGGARAN SISWA SMPN 216 JAKARTA'],
+            ['Sistem Monitoring Perilaku dan Pelanggaran Siswa'],
+            [],
+            ['No','NIS','Nama Lengkap','L/P','Kelas','Skor Keseluruhan','Status','Kehadiran','Disiplin','Etika Sosial','Agresivitas','Integritas','Risiko Tinggi']
+        ];
     }
 
     public function map($student): array
@@ -45,6 +50,10 @@ class StudentsExport implements FromCollection, WithHeadings, WithMapping, WithS
 
     public function styles(Worksheet $sheet): array
     {
-        return [1 => ['font' => ['bold' => true]]];
+        return [
+            1 => ['font' => ['bold' => true, 'size' => 14]],
+            2 => ['font' => ['bold' => true, 'size' => 12]],
+            4 => ['font' => ['bold' => true]],
+        ];
     }
 }

@@ -87,9 +87,7 @@
                 </button>
             </form>
 
-            <div class="mt-6 text-center text-sm text-slate-500">
-                Siswa Baru? <a href="{{ route('public.register') }}" class="text-indigo-500 font-bold hover:text-indigo-600 transition-colors">Daftar di sini</a>
-            </div>
+
 
             {{-- Features --}}
             <div class="mt-10 grid grid-cols-3 gap-3">

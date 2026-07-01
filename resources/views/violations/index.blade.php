@@ -21,20 +21,21 @@
 @section('content')
 {{-- Filter --}}
 <div class="glass-card p-4 mb-6">
-    <form method="GET" action="{{ route('violations.index') }}" class="flex flex-wrap gap-3">
-        <select name="category" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+    <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        <form method="GET" action="{{ route('violations.index') }}" class="flex flex-wrap items-center gap-3">
+        <select name="category" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl pl-3 pr-8 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
             <option value="">Semua Kategori</option>
             @foreach(['kehadiran'=>'Kehadiran','kedisiplinan'=>'Kedisiplinan','etika_sosial'=>'Etika Sosial','agresivitas'=>'Agresivitas','integritas'=>'Integritas','risiko_tinggi'=>'Risiko Tinggi'] as $key=>$label)
             <option value="{{ $key }}" {{ request('category')===$key?'selected':'' }}>{{ $label }}</option>
             @endforeach
         </select>
-        <select name="severity" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+        <select name="severity" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl pl-3 pr-8 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
             <option value="">Semua Keparahan</option>
             <option value="ringan" {{ request('severity')==='ringan'?'selected':'' }}>🟡 Ringan</option>
             <option value="sedang" {{ request('severity')==='sedang'?'selected':'' }}>🟠 Sedang</option>
             <option value="berat"  {{ request('severity')==='berat' ?'selected':'' }}>🔴 Berat</option>
         </select>
-        <select name="class_id" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+        <select name="class_id" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl pl-3 pr-8 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
             <option value="">Semua Kelas</option>
             @foreach($classes as $class)
             <option value="{{ $class->id }}" {{ request('class_id')==$class->id?'selected':'' }}>{{ $class->class_name }}</option>
@@ -44,9 +45,11 @@
                class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
         <input type="date" name="date_to" value="{{ request('date_to') }}"
                class="bg-white border border-slate-300 text-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-5 py-2.5 rounded-xl transition-colors font-medium">Filter</button>
-        <a href="{{ route('violations.index') }}" class="text-gray-500 hover:text-slate-800 text-sm px-3 py-2.5 rounded-xl transition-colors">Reset</a>
-        <div class="ml-auto flex gap-2">
+        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-5 py-2.5 rounded-xl transition-colors font-medium flex items-center justify-center">Filter</button>
+        <a href="{{ route('violations.index') }}" class="text-gray-500 hover:text-slate-800 text-sm px-3 py-2.5 rounded-xl transition-colors flex items-center justify-center">Reset</a>
+        </form>
+        
+        <div class="flex flex-wrap items-center gap-2">
             <a href="{{ route('export.violations.pdf') }}?{{ http_build_query(request()->all()) }}"
                class="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-2.5 rounded-xl transition-colors font-medium flex items-center gap-1.5 hover:bg-red-500/20" title="Export PDF">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
@@ -62,7 +65,7 @@
                 Tambah Pelanggaran
             </a>
         </div>
-    </form>
+    </div>
 </div>
 
 <div class="glass-card overflow-hidden">
